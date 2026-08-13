@@ -1,10 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+
+
 body, html {
   margin: 0;
   padding: 0;
   height: 100vh;
   background-color: #0B0B13; 
+  overflow: hidden;
 }
 
+p {
+  font-family: Arial, sans-serif;
+}
 
 .appContainer {
   display: flex;
@@ -25,8 +32,10 @@ body, html {
   flex: 3;
   display: flex;
   flex-direction: column;
-  background-color: #0B0B13;
   border-radius: 10px;
+  background-image: radial-gradient(rgb(64, 64, 64) 1px, transparent 0);
+  background-size: 40px 40px;
+  background-position: -19px -19px;
 }
 
 
@@ -35,6 +44,11 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.visualStage h1 {
+  top: 0px;
+  position: absolute;
 }
 
 
@@ -56,13 +70,22 @@ body, html {
   position: relative;
 }
 
+.sideBarContent {
+  white-space: pre-line;
+}
+
+.sideBarContent h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
 .tabs {
   position: absolute;
   left: -38px;
   top: 40px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
 }
 
 .tabButton {
@@ -103,7 +126,7 @@ button {
   padding: 10px 10px;
   font-size: 14px;
   cursor: pointer; 
-  transition: all 0.2 ease;
+  transition: all 0.2s ease;
 }
 
 button:hover {
@@ -112,6 +135,229 @@ button:hover {
 }
 
 button:active {
+  background-color: rgb(117, 230, 117);
+  color: black;
   transform: scale(0.9);
+}
+
+.activeDSAAlgorithm {
+  background-color: rgb(117, 230, 117);
+  color: black;
+}
+
+.activeDSAAlgorithm:hover {
+  background-color: rgb(117, 230, 117);
+  color: black;
+}
+
+
+
+.arrayContainer {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.arrayWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.arrayBox {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #252526;
+  border: 2px solid #555;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+
+.arrayBox.leftPointerActive {
+  border-color: #3bf692; 
+  background-color: rgb(118, 219, 140);
+  box-shadow: 0 0 15px rgba(59, 246, 131, 0.4);
+}
+
+.arrayBox.rightPointerActive {
+  border-color: #3bf692; 
+  background-color: rgb(118, 219, 140);
+  box-shadow: 0 0 15px rgba(59, 246, 131, 0.4);
+}
+
+
+.problemStatement, .problemExplanation {
+  background-color: #29292a;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #3a3a3a;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+
+hr {
+  opacity: 50%;
+}
+
+.activeTabButton {
+  background-color: #10101c;
+  border: 1px solid #01a778;
+  border-right: none;
+  position: relative;
+  z-index: 10;
+  transform: translateX(1px);
+}
+
+.activeTabButton:hover {
+  background-color: #10101c;
+  border: 1px solid #01a778;
+  border-right: none;
+  position: relative;
+  z-index: 10;
+  transform: translateX(1px);
+}
+
+.tabButton:hover {
+  border-right: none;
+}
+
+
+.whiteBoard {
+  font-family: 'Caveat', cursive;
+  font-size: 40px;
+  position: absolute;
+  top: 30%;
+  left: 10%;  
+  color: rgba(255, 255, 255, 0.85);
+  transform: rotate(-4deg);
+  display: flex;
+  flex-direction: column;
+  width: 70px;
+}
+
+.operator {
+  font-family: 'Caveat', cursive;
+}
+
+.number {
+  text-align: right;
+  width: 100%;
+}
+
+.mathRow, .mathResult {
+  display: flex;
+  justify-content: space-between;
+  line-height: 0.9;
+}
+
+
+.resultLine {
+  border: none;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.7);
+  width: 100%;
+  margin: 10px;
+}
+
+
+.pencilWrite {
+  animation: scribbleWrite 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  display: inline-block; 
+}
+
+
+@keyframes scribbleWrite {
+  0% {
+    opacity: 0;
+    filter: blur(4px);
+    transform: scale(0.8) rotate(5deg) translateY(-2px);
+  }
+  50% {
+    opacity: 0.5;
+    filter: blur(1px); 
+    transform: scale(1.1) rotate(-2deg) translateY(1px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1) rotate(0deg) translateY(0px);
+  }
+}
+
+
+.pointerLabel p {
+  font-family: 'Caveat', cursive;
+  font-size: 30px;
+}
+
+
+.codeBlockContainer {
+  background-color: #1e1e1e;
+  border-radius: 20px;
+  border: 1px solid #3a3a3a;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+
+}
+
+.languageSelector {
+  display: flex;
+  background-color: #252526;
+  border-bottom: 1px solid #3a3a3a;
+}
+
+.langButton {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 10px 15px;
+  color: #888;
+  margin: 0;
+}
+
+.langButton.activeLang {
+  background-color: #1e1e1e;
+  color: rgb(117, 230, 117);
+  border-top: 2px solid rgb(117, 230, 117);
+}
+
+.codeDisplay {
+  padding: 20px;
+  margin: 0;
+  overflow-x: auto; 
+  color: #d4d4d4;
+  max-height: 450px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  scrollbar-width: thin;
+  scrollbar-color: #444 transparent;
+}
+
+.codeDisplay::-webkit-scrollbar {
+  width: 8px; 
+  height: 8px;
+}
+
+.codeDisplay::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.codeDisplay::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 10px;
+}
+
+.codeDisplay::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(117, 230, 117);
 }
 

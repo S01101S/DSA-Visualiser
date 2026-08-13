@@ -1,21 +1,298 @@
 import './App.css'
-
+import { useState } from 'react';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 
 function App() {
+
+  const [stageName, setStageName] = useState("Pick a DSA Technique");
+  const [activeAlgorithm, setActiveAlgorithm] = useState("");
+  const [textHeaderName, setTextHeaderName] = useState("Pick a DSA Technique");
+  const [problemDescription, setProblemDescription] = useState("Problem: ");
+  const [currentStageIndex, setCurrentStageIndex] = useState(0);
+  const twoPointerArray = [2, 7, 11, 15];
+  const [activeTab, setActiveTab] = useState("Logic");
+  const [activeLanguage, setActiveLanguage] = useState("Python");
+  const languageMap = {
+    "Python": "python",
+    "Java": "java",
+    "C++": "cpp"
+  }
+
+
+  const handleLogicTabClick = () => {
+    setActiveTab("Logic");
+  };
+
+  const handleCodeTabClick = () => {
+    setActiveTab("Code");
+  };
+
+  const handleTwoPointerClick = () => {
+    setStageName("Two Pointer");
+    setActiveAlgorithm("TwoPointer");
+    setTextHeaderName("Two Pointer");
+    setProblemDescription(`Problem: Given a sorted array of integers, find two numbers that add up to the target value.
+
+      Array: [2, 7, 11, 15]
+      Target: 18`);
+    setCurrentStageIndex(0);
+  };
+
+  const handleNext = () => {
+    if(activeAlgorithm === "TwoPointer" && currentStageIndex < twoPointerStages.length - 1) {
+      setCurrentStageIndex(currentStageIndex + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if(currentStageIndex > 0) {
+      setCurrentStageIndex(currentStageIndex - 1);
+    }
+  };
+
+  const twoPointerStages = [
+    {
+      stageIndex: 0,
+      leftPointer: 0,
+      rightPointer: 3,
+      explanation: "Initialise the left pointer at the beginning of the array and the right pointer at the end of the array."
+    },
+    {
+      stageIndex: 1,
+      leftPointer: 0,
+      rightPointer: 3,
+      explanation: "Calculate the sum of the values at the current pointers: 2 + 15 = 17."
+    },
+    {
+      stageIndex: 2,
+      leftPointer: 0, 
+      rightPointer: 3,
+      explanation: "Compare the sum (17) to the target (18). Since 17 is less than 18 we need to find a larger sum. Because the array is sorted in ascending order we move the left pointer to the right."
+    },
+    {
+      stageIndex: 3,
+      leftPointer: 1,
+      rightPointer: 3,
+      explanation: "Move the left pointer one step to the right to index 1 (value 7)."
+    },
+    {
+      stageIndex: 4,
+      leftPointer: 1,
+      rightPointer: 3,
+      explanation: "Calculate the new sum: 7 + 15 = 22."
+    },
+    {
+      stageIndex: 5,
+      leftPointer: 1,
+      rightPointer: 3,
+      explanation: "Compare the sum (22) to the target (18). Since 22 is greater than 18 we are over our target and need a smaller sum. We move the right pointer to the left."
+    },
+    {
+      stageIndex: 6,
+      leftPointer: 1,
+      rightPointer: 2,
+      explanation: "Move the right pointer one step to the left to index 2 (value 11)."
+    },
+    {
+      stageIndex: 7,
+      leftPointer: 1,
+      rightPointer: 2,
+      explanation: "Calculate the new sum: 7 + 11 = 18."
+    },
+    {
+      stageIndex: 8,
+      leftPointer: 1,
+      rightPointer: 2,
+      explanation: "Target found. The sum matches our target of 18. The algorithm stops and returns the indices [1, 2]."
+    }
+  ];
+
+
+  const twoPointerCode = {
+    "Python": `
+      def twoSum(array, target):
+
+        left = 0
+        right = len(array) - 1
+
+
+        while(left < right):
+
+          current_sum = array[left] + array[right]
+
+          if current_sum == target:
+            return [left, right]
+
+          elif current_sum > target:
+            right -= 1
+
+          else:
+            left += 1
+        
+        return []`,
+
+    "Java": `
+      class Solution {
+      
+        public int[] twoSum(int[] array, int target) {
+        
+          int left = 0;
+          int right = array.length - 1;
+
+          while(left < right) {
+          
+            int current_sum = array[left] + array[right];
+
+            if(current_sum == target) {
+              return new int[] {left, right};
+            }
+
+            else if(current_sum > target) {
+              right--;
+            }
+
+            else {
+              left++;
+            }
+            
+          }
+        
+          return new int[]{};
+        }
+      }`,
+
+    "C++": `
+      class Solution {
+      
+      public:
+
+        vector<int> twoSum(vector<int>& array, int target) {
+
+          int left = 0;
+          int right = array.size() - 1;
+
+          while(left < right) {
+
+            int current_sum = array[left] + array[right];
+
+            if(current_sum == target) {
+              return {left, right};
+            }
+
+            else if(current_sum > target) {
+              right--;
+            }
+
+            else {
+              left++;  
+            }
+          
+          }
+        
+          return {};
+        }
+      };`
+  }
+
+  const handleSlidingWindowClick = () => {
+    setStageName("Sliding Window");
+    setActiveAlgorithm("SlidingWindow");
+    setTextHeaderName("Sliding Window");
+    setProblemDescription(`Problem: HELOOOO`);
+    setCurrentStageIndex(0);
+  }
+
+
+  let currentStage = null;
+
+  if(activeAlgorithm === "TwoPointer") {
+    currentStage = twoPointerStages[currentStageIndex];
+  }
 
   return (
     <div className="appContainer">
       
       <div className="topSection">
         <div className="visualiserContainer">
+
+
           <div className="visualStage">
-            <h1>STAGEEE</h1>
+            <h1>{stageName} Step {currentStageIndex + 1}</h1>
+
+            {activeAlgorithm === "TwoPointer" && currentStageIndex > 0 && (
+
+              <div className="whiteBoard">
+                <div className="mathRow">
+                  <span className="operator"></span>
+                  <span className="number pencilWrite" key={`left-${currentStageIndex}`}>{twoPointerArray[currentStage.leftPointer]}</span>
+                </div>
+
+                <div className="mathRow">
+                  <span className="operator">+</span>
+                  <span className="number pencilWrite" key={`right-${currentStageIndex}`}>{twoPointerArray[currentStage.rightPointer]}</span>
+                </div>
+                <hr className="resultLine"></hr>
+                <div className="mathResult">
+                  <span className="operator"></span>
+                  <span className="number pencilWrite" key={`sum-${currentStageIndex}`}>{twoPointerArray[currentStage.leftPointer] + twoPointerArray[currentStage.rightPointer]}</span>
+                </div>
+              </div>
+
+      
+            )}
+
+            {activeAlgorithm === "TwoPointer" && (
+            
+              <div className="arrayContainer">
+
+              {twoPointerArray.map((value, index) => {
+
+                let isLeftPointer = currentStage?.leftPointer === index;
+                let isRightPointer = currentStage?.rightPointer === index;
+
+                return (
+                  <div key={index} className="arrayWrapper">
+                    
+                    <div className={`arrayBox ${isLeftPointer ? "leftPointerActive" : ""} ${isRightPointer ? "rightPointerActive" : ""}`}>
+                      {value}
+                    </div>
+
+                    <div className="pointerLabel">
+                      {isLeftPointer && (<div className="label leftLabel customPointer">
+                        
+                        <svg width="24" height="30">
+                          <line x1="12" y1="27" x2="12" y2="4" stroke="white" strokeWidth="5" strokeLinecap="round"></line>
+                          <polyline points="2 15 12 2 22 15" stroke="white" strokeWidth="5" fill="none" strokeLinecap="round"></polyline>
+                        </svg>
+                        <p>Left</p>
+                        </div>)}
+
+
+                      {isRightPointer && (<div className="label rightLabel">
+                        <svg width="24" height="30">
+                          <line x1="12" y1="27" x2="12" y2="4" stroke="white" strokeWidth="5" strokeLinecap="round"></line>
+                          <polyline points="2 15 12 2 22 15" stroke="white" strokeWidth="5" fill="none" strokeLinecap="round"></polyline>
+                        </svg>
+                        <p>Right</p>
+                      </div>)}
+                        
+                    </div>
+                    
+                  </div>
+                )
+              })}
+
+              </div>
+              
+            )}
+
           </div>  
-          
+
           <div className="controlButtons">
-            <button>Previous</button>
-            <button>Next</button>
+            <button onClick={handlePrevious}>Previous</button>
+            <button onClick={handleNext}>Next</button>
 
           </div>
         </div>
@@ -23,21 +300,65 @@ function App() {
 
         <div className="sideBar">
           <div className="tabs">
-            <button className="tabButton">Text</button>
-            <button className="tabButton">Code</button>
+            <button className={`tabButton ${activeTab === "Logic" ? "activeTabButton" : ""}`} onClick={handleLogicTabClick}>
+              Logic
+            </button>
+            <button className={`tabButton ${activeTab === "Code" ? "activeTabButton" : ""}`} onClick={handleCodeTabClick}>
+              Code
+            </button>
           </div>
           
-          <div className="sideBarContnt">
-            <p>TEXTTTTTTTTTTTTTTTTTTTTT</p>
+          <div className="sideBarContent">
+
+            {activeTab === "Logic" ? (
+              
+              <>
+                <div className="problemStatement">  
+                  <h2>{textHeaderName}</h2>
+                  <hr></hr>
+                  <p>{problemDescription}</p>
+                </div>
+
+                <div className="problemExplanation">
+                  <h2>Explanation</h2>
+                  <hr></hr>
+                  <p>{currentStage?.explanation || "Select an algorithm to see its explanation."}</p>
+                </div>
+              </>
+            ) : (
+
+
+              <div className="codeBlockContainer">
+
+                <div className="codingLanguage"> 
+
+                  {["Python", "Java", "C++"].map((lang) => (
+
+                    <button key={lang} className={`langButton ${activeLanguage === lang ? "activeLang" : ""}`} onClick={() => setActiveLanguage(lang)}>{lang}</button>
+                  ))}
+
+                </div>
+
+                <SyntaxHighlighter language={languageMap[activeLanguage]} style={vscDarkPlus} className="codeDisplay">
+
+                  {activeAlgorithm === "TwoPointer" ? twoPointerCode[activeLanguage] : "Select an algorithm"}
+
+                </SyntaxHighlighter>
+              </div>
+
+            )}
+
           </div>
+
+          
         </div>
       </div>
 
 
       <div className="bottomBar">
         <div className="dsaButtons">
-          <button>Two Pointer</button>
-          <button>Sliding Window</button>
+          <button className={activeAlgorithm === "TwoPointer" ? "activeDSAAlgorithm" : ""} onClick={handleTwoPointerClick}>Two Pointer</button>
+          <button className={activeAlgorithm === "SlidingWindow" ? "activeDSAAlgorithm" : ""} onClick={handleSlidingWindowClick}>Sliding Window</button>
         </div>
       </div>
     </div>
