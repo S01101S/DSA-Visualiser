@@ -361,3 +361,7 @@ hr {
   background-color: rgb(117, 230, 117);
 }
 
+
+.middleBoxUp {
+  transform: translateY(-20px);
+}

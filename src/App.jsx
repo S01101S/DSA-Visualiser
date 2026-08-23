@@ -12,6 +12,7 @@ function App() {
   const [problemDescription, setProblemDescription] = useState("Problem: ");
   const [currentStageIndex, setCurrentStageIndex] = useState(0);
   const twoPointerArray = [2, 7, 11, 15];
+  const slidingWindowArray = [2, 1, 5, 1, 3, 2];
   const [activeTab, setActiveTab] = useState("Logic");
   const [activeLanguage, setActiveLanguage] = useState("Python");
   const languageMap = {
@@ -42,6 +43,9 @@ function App() {
 
   const handleNext = () => {
     if(activeAlgorithm === "TwoPointer" && currentStageIndex < twoPointerStages.length - 1) {
+      setCurrentStageIndex(currentStageIndex + 1);
+    }
+    else if(activeAlgorithm === "SlidingWindow" && currentStageIndex < slidingWindowStages.length - 1) {
       setCurrentStageIndex(currentStageIndex + 1);
     }
   };
@@ -200,15 +204,186 @@ function App() {
     setStageName("Sliding Window");
     setActiveAlgorithm("SlidingWindow");
     setTextHeaderName("Sliding Window");
-    setProblemDescription(`Problem: HELOOOO`);
+    setProblemDescription(`Problem: Given an array of integers and an integer k, find the maximum sum of any contiguous subarray of size k.
+      
+      Array: [2, 1, 5, 1, 3, 2]
+      k: 3
+    `);
     setCurrentStageIndex(0);
   }
+
+  const slidingWindowCode = {
+    "Python" : `
+      def maxSubarraySum(array, k):
+
+        if len(array) < k:
+          return 0
+
+        left = 0
+        right = k-1
+        length_of_array = len(array) - 1
+
+        current_sum = sum(array[left : right+1])
+        max_sum = current_sum 
+        
+
+        while right < length_of_array:
+
+          current_sum -= array[left]
+
+          left += 1
+          right += 1
+
+          current_sum += array[right]
+
+          if current_sum > max_sum:
+            max_sum = current_sum 
+
+        
+        return max_sum`,
+
+    "Java" : `
+      class Solution {
+
+        public int maxSubarraySum(int[] array, int k) {
+        
+          if(array.length < k) {
+            return 0;
+          }
+
+          int left = 0;
+          int right = k-1;
+          int length_of_array = array.length - 1;
+          
+          int current_sum = 0;
+
+          for(int i=0; i<=right; i++) {
+            current_sum += array[i];
+          }
+
+          int max_sum = current_sum;
+
+          while(right < length_of_array) {
+
+            current_sum -= array[left];
+
+            left++;
+            right++;
+
+            current_sum += array[right];
+
+            if(current_sum > max_sum) {
+              max_sum = current_sum;
+            }
+          
+          }
+
+          return max_sum;
+
+        }
+      }`,
+
+    "C++" : `
+      class Solution {
+
+        public:
+
+          int maxSubarraySum(vector<int>& array, int k) {
+          
+            if(array.size() < k) {
+              return 0;
+            }
+
+            int left = 0;
+            int right = k-1;
+            int length_of_array = array.size() - 1;
+
+            int current_sum = 0;
+
+            for(int i=0; i<=right; i++) {
+              current_sum += array[i];
+            }
+            
+            int max_sum = current_sum;
+
+            while(right < length_of_array) {
+            
+              current_sum -= array[left];
+
+              left++;
+              right++;
+
+              current_sum += array[right];
+
+              if(current_sum > max_sum) {
+                max_sum = current_sum;
+              }
+            }
+
+            return max_sum;
+          }
+      }`
+  }
+
+  const slidingWindowStages = [
+    {
+      stageIndex: 0, 
+      leftPointer: 0,
+      rightPointer: 2,
+      explanation: "Initialise the window of size k=3 at the start of the array. Calculate the sum of the first window: 2 + 1 + 5 = 8. Set the maximum sum to 8." 
+    },
+    {
+      stageIndex: 1,
+      leftPointer: 1,
+      rightPointer: 3,
+      explanation: "Slide the window one step right. Instead of recalculating the sum, subtract the number that left the window (2) and add the new number (1) to the sum.",
+    },
+    {
+      stageIndex: 2, 
+      leftPointer: 1,
+      rightPointer: 3,
+      explanation: "The new sum is 8 - 2 + 1 = 7. Compare that to the maximum sum (8). It does not change and remains as 8."
+    },
+    {
+      stageIndex: 3,
+      leftPointer: 2,
+      rightPointer: 4,
+      explanation: "Slide the window to the right again. Subtract the outgoing number (1) and add the incoming number (3)."
+    },
+    {
+      stageIndex: 4,
+      leftPointer: 2,
+      rightPointer: 4,
+      explanation: "The new sum is 7 - 1 + 3 = 9. Since 9 is greater than our previous maximum sum of 8, we update the maximum sum to 9."
+    },
+    {
+      stageIndex: 5,
+      leftPointer: 3,
+      rightPointer: 5,
+      explanation: "Slide the window to the right. Subtract the outgoing number (5) and add the incoming number (2)."
+    },
+    {
+      stageIndex: 6,
+      leftPointer: 3,
+      rightPointer: 5,
+      explanation: "The new sum is 9 - 5 + 2 = 6. Comparing that to our maximum sum which is 9. Since the new sum is lower, our maximum sum remains the same (9)."
+    },
+    {
+      stageIndex: 7,
+      leftPointer: 3,
+      rightPointer: 5,
+      explanation: "The right pointer has reached the end of the array. The algorithm terminates and returns the maximum sum found: 9."
+    }
+  ]
 
 
   let currentStage = null;
 
   if(activeAlgorithm === "TwoPointer") {
     currentStage = twoPointerStages[currentStageIndex];
+  }
+  else if(activeAlgorithm === "SlidingWindow") {
+    currentStage = slidingWindowStages[currentStageIndex];
   }
 
   return (
@@ -288,6 +463,55 @@ function App() {
               
             )}
 
+            {activeAlgorithm === "SlidingWindow" && (
+
+              <div className="arrayContainer">
+
+              {slidingWindowArray.map((value, index) => {
+
+                let isLeftPointer = currentStage?.leftPointer === index;
+                let isRightPointer = currentStage?.rightPointer === index;
+
+                let betweenPointer = currentStage && index >= currentStage.leftPointer && index <= currentStage.rightPointer;
+                let isMiddleBox = activeAlgorithm === "SlidingWindow" && betweenPointer && !isLeftPointer && !isRightPointer;
+
+
+                return (
+                  <div key={index} className="arrayWrapper">
+                    
+                    <div className={`arrayBox ${betweenPointer ? "leftPointerActive" : ""} ${isMiddleBox ? "middleBoxUp" : ""}`}>
+                      {value}
+                    </div>
+
+                    <div className="pointerLabel">
+                      {isLeftPointer && (<div className="label leftLabel customPointer">
+                        
+                        <svg width="24" height="30">
+                          <line x1="12" y1="27" x2="12" y2="4" stroke="white" strokeWidth="5" strokeLinecap="round"></line>
+                          <polyline points="2 15 12 2 22 15" stroke="white" strokeWidth="5" fill="none" strokeLinecap="round"></polyline>
+                        </svg>
+                        <p>Left</p>
+                        </div>)}
+
+
+                      {isRightPointer && (<div className="label rightLabel">
+                        <svg width="24" height="30">
+                          <line x1="12" y1="27" x2="12" y2="4" stroke="white" strokeWidth="5" strokeLinecap="round"></line>
+                          <polyline points="2 15 12 2 22 15" stroke="white" strokeWidth="5" fill="none" strokeLinecap="round"></polyline>
+                        </svg>
+                        <p>Right</p>
+                      </div>)}
+                        
+                    </div>
+                    
+                  </div>
+                )
+              })}
+
+              </div>
+
+            )}
+
           </div>  
 
           <div className="controlButtons">
@@ -339,9 +563,9 @@ function App() {
 
                 </div>
 
-                <SyntaxHighlighter language={languageMap[activeLanguage]} style={vscDarkPlus} className="codeDisplay">
+                <SyntaxHighlighter language={languageMap[activeLanguage]} style={vscDarkPlus} className="codeDisplay" showLineNumbers={true}>
 
-                  {activeAlgorithm === "TwoPointer" ? twoPointerCode[activeLanguage] : "Select an algorithm"}
+                  {activeAlgorithm === "TwoPointer" ? twoPointerCode[activeLanguage] : activeAlgorithm === "SlidingWindow" ? slidingWindowCode[activeLanguage] : "Select an algorithm"}
 
                 </SyntaxHighlighter>
               </div>
