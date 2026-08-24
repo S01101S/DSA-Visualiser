@@ -378,12 +378,45 @@ function App() {
 
 
   let currentStage = null;
+  let slidingWindowPrevSum = 0;
+  let slidingWindowOutVal = 0;
+  let slidingWindowInVal = 0;
+  let slidingWindowNewSum = 0;
+  let slidingWindowMaxSum = 0;
+  
 
   if(activeAlgorithm === "TwoPointer") {
     currentStage = twoPointerStages[currentStageIndex];
   }
   else if(activeAlgorithm === "SlidingWindow") {
     currentStage = slidingWindowStages[currentStageIndex];
+  
+    if(currentStageIndex > 0 && currentStageIndex < 7) {
+
+      currentStage = slidingWindowStages[currentStageIndex];
+
+      let runningSum = slidingWindowArray[0] + slidingWindowArray[1] + slidingWindowArray[2];
+      slidingWindowMaxSum = runningSum;
+
+      for(let i=1; i<=currentStage.leftPointer; i++) {
+        runningSum = runningSum - slidingWindowArray[i-1] + slidingWindowArray[i+2];
+
+        if(runningSum > slidingWindowMaxSum) {
+          slidingWindowMaxSum = runningSum;
+        }
+      }
+
+
+      const outIndex = currentStage.leftPointer - 1;
+      const inIndex = currentStage.rightPointer;
+
+      slidingWindowPrevSum = slidingWindowArray[outIndex] + slidingWindowArray[currentStage.leftPointer] + slidingWindowArray[inIndex - 1];
+      slidingWindowOutVal = slidingWindowArray[outIndex];
+      slidingWindowInVal = slidingWindowArray[inIndex];
+      slidingWindowNewSum = slidingWindowPrevSum - slidingWindowOutVal + slidingWindowInVal;
+
+    }
+  
   }
 
   return (
@@ -414,9 +447,73 @@ function App() {
                   <span className="number pencilWrite" key={`sum-${currentStageIndex}`}>{twoPointerArray[currentStage.leftPointer] + twoPointerArray[currentStage.rightPointer]}</span>
                 </div>
               </div>
-
-      
             )}
+
+            {activeAlgorithm === "SlidingWindow" && (<div className="whiteBoard" style={{width:"max-content", top: "50%"}}>
+
+              {currentStageIndex === 0 && (
+
+                <>
+                  <div className="mathRow">
+
+                    <span className="operator"></span>
+                    <span className="number pencilWrite">{slidingWindowArray[0]} + {slidingWindowArray[1]} + {slidingWindowArray[2]} = {slidingWindowArray[0] + slidingWindowArray[1] + slidingWindowArray[2]}</span>
+
+                  </div>
+
+                  <div className="mathRow" style={{ marginTop: "10px" }}>
+
+                    <span className="number pencilWrite" style={{color:"rgb(118, 219, 140)"}}>
+                      Max Sum = {slidingWindowArray[0] + slidingWindowArray[1] + slidingWindowArray[2]}
+                    </span>
+
+                  </div>
+                </>
+              )}
+
+
+              {currentStageIndex > 0 && currentStageIndex < 7 && (
+
+                <>
+
+                  <div className="mathRow">
+
+                    <span className="operator"></span>
+                    <span className="number pencilWrite">{slidingWindowPrevSum} - {slidingWindowOutVal} + {slidingWindowInVal} = {slidingWindowPrevSum - slidingWindowOutVal + slidingWindowInVal}</span>
+
+                  </div>
+
+                  <div className="mathRow" style={{marginTop: "10px"}}>
+                    
+                    <span className="number pencilWrite" style={{color: "rgb(118, 219, 140"}}>
+
+                      Max Sum = {slidingWindowMaxSum}
+
+                    </span>
+                  </div>
+
+
+                </>
+              )}
+
+              {currentStageIndex === 7 && (
+
+                <>
+
+                  <div className="mathResult">
+
+                    <span className="operator"></span>
+                    <span className="number pencilWrite">Max Sum = 9</span>
+                  </div>
+                
+                </>
+
+              )}
+
+
+            </div>)}
+
+
 
             {activeAlgorithm === "TwoPointer" && (
             
