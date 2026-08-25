@@ -195,6 +195,13 @@ button:active {
   box-shadow: 0 0 15px rgba(59, 246, 131, 0.4);
 }
 
+.arrayBox.midPointerActive {
+  border-color: #3bf692; 
+  background-color: rgb(118, 219, 140);
+  box-shadow: 0 0 15px rgba(59, 246, 131, 0.4);
+}
+
+
 
 .problemStatement, .problemExplanation {
   background-color: #29292a;
@@ -364,4 +371,5 @@ hr {
 
 .middleBoxUp {
   transform: translateY(-20px);
+
 }

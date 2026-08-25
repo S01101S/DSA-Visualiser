@@ -13,6 +13,7 @@ function App() {
   const [currentStageIndex, setCurrentStageIndex] = useState(0);
   const twoPointerArray = [2, 7, 11, 15];
   const slidingWindowArray = [2, 1, 5, 1, 3, 2];
+  const binarySearchArray = [2, 8, 15, 23, 42, 56, 72];
   const [activeTab, setActiveTab] = useState("Logic");
   const [activeLanguage, setActiveLanguage] = useState("Python");
   const languageMap = {
@@ -46,6 +47,9 @@ function App() {
       setCurrentStageIndex(currentStageIndex + 1);
     }
     else if(activeAlgorithm === "SlidingWindow" && currentStageIndex < slidingWindowStages.length - 1) {
+      setCurrentStageIndex(currentStageIndex + 1);
+    }
+    else if(activeAlgorithm === "BinarySearch" && currentStageIndex < binarySearchStages.length - 1) {
       setCurrentStageIndex(currentStageIndex + 1);
     }
   };
@@ -375,15 +379,72 @@ function App() {
       explanation: "The right pointer has reached the end of the array. The algorithm terminates and returns the maximum sum found: 9."
     }
   ]
+  
+  const handleBinarySearchClick = () => {
+    setStageName("Binary Search");
+    setActiveAlgorithm("BinarySearch");
+    setTextHeaderName("Binary Search");
+    setProblemDescription(`Problem: Given an array of integers sorted in ascending order, find the index of the target number. If the target does not exist in the array return -1.
+      
+      array: [2, 8, 15, 23, 42, 56, 72]
+      target = 42
+      `);
+    setCurrentStageIndex(0);
+  }
 
 
+  const binarySearchStages = [
+    {
+      stageIndex: 0,
+      leftPointer: 0,
+      rightPointer: 6,
+      midPointer: 3,
+      explanation: "Initialise the left pointer at the start of the array and the right pointer at the end. Calculate the middle index: (0 + 6) / 2 = 3. The middle value is 23."
+    },
+    {
+      stageIndex: 1,
+      leftPointer: 0,
+      rightPointer: 6,
+      midPointer: 3,
+      explanation: "Compare the middle value (23) to our target (42). Since 23 is less than 42, we know the target must be in the right half of the array. We can ignore the left half."
+    },
+    {
+      stageIndex: 2,
+      leftPointer: 4,
+      rightPointer: 6,
+      midPointer: 5,
+      explanation: "Move the left pointer to middle + 1 (index 4) to focus on the right half. Calculate the new middle index: (4+6) / 2. The new middle value is 56."
+    },
+    {
+      stageIndex: 3,
+      leftPointer: 4,
+      rightPointer: 6,
+      midPointer: 5,
+      explanation: "Compare the new middle value (56) to our target (42). Since 56 is greater than 42 we know the target must be in the left half of this new window. We ignore the right half."
+    },
+    {
+      stageIndex: 4,
+      leftPointer: 4,
+      rightPointer: 4,
+      midPointer: 4,
+      explanation: "Move the right pointer to middle - 1 (index 4). Calculate the new middle index: (4 + 4) / 2 = 4. The new middle value is 42."
+    },
+    {
+      stageIndex: 5,
+      leftPointer: 4,
+      rightPointer: 4,
+      midPointer: 4,
+      explanation: "Compare the middle value (42) to our target (42). They match which means the algorithm terminates and returns the index 4."
+    }
+  ]
+  
   let currentStage = null;
   let slidingWindowPrevSum = 0;
   let slidingWindowOutVal = 0;
   let slidingWindowInVal = 0;
   let slidingWindowNewSum = 0;
   let slidingWindowMaxSum = 0;
-  
+
 
   if(activeAlgorithm === "TwoPointer") {
     currentStage = twoPointerStages[currentStageIndex];
@@ -416,7 +477,9 @@ function App() {
       slidingWindowNewSum = slidingWindowPrevSum - slidingWindowOutVal + slidingWindowInVal;
 
     }
-  
+  }
+  else if(activeAlgorithm === "BinarySearch") {
+    currentStage = binarySearchStages[currentStageIndex];
   }
 
   return (
@@ -609,6 +672,121 @@ function App() {
 
             )}
 
+
+            {activeAlgorithm === "BinarySearch" && (
+
+              <div className="whiteBoard" style={{width: "max-content", top: "55%"}}>
+
+                <div className="mathRow">
+
+                  <span className="number pencilWrite" style={{textAlign: "left"}}>
+                    left = {currentStage.leftPointer} <br></br> right = {currentStage.rightPointer}
+                  </span>
+                </div>
+
+                <div className="mathRow">
+                  
+                  <span className="number pencilWrite">
+                    middle = ({currentStage.leftPointer} + {currentStage.rightPointer}) / 2 = {currentStage.midPointer}
+                  </span>
+                </div>
+
+                {currentStageIndex === 1 && (
+
+                  <div className="mathRow" style={{ marginTop: "10px" }}>
+                  
+                    <span className="number pencilWrite" style={{color: "rgb(118, 219, 140"}}>
+                  
+                      {binarySearchArray[currentStage.midPointer]} &lt; 42 (Search Right)
+                    </span>
+                  </div>
+
+                )}
+
+                {currentStageIndex === 3 && (
+
+                  <div className="mathRow" style={{marginTop: "10px"}}>
+                    <span className="number pencilWrite" style={{color: "rgb(118, 219, 140"}}>
+                  
+                      {binarySearchArray[currentStage.midPointer]} &lt; 42 (Search left)
+                    </span>
+                  </div>
+                )}
+
+                {currentStageIndex === 5 && (
+
+                  <div className="mathRow" style={{marginTop: "10px"}}>
+                    <span className="number pencilWrite" style={{color: "rgb(118, 219, 140"}}>
+
+                      {binarySearchArray[currentStage.midPointer]} = 42 (Target found)
+                    </span>
+                  </div>
+                )}
+
+              </div>
+
+            )}
+
+    
+            {activeAlgorithm === "BinarySearch" && (
+
+              <div className="arrayContainer">
+
+                {binarySearchArray.map((value, index) => {
+
+                  let isLeftPointer = currentStage?.leftPointer === index;
+                  let isRightPointer = currentStage?.rightPointer === index;
+                  let isMidPointer = currentStage?.midPointer === index;
+                  
+                  return (
+                  <div key={index} className="arrayWrapper">
+                    
+                    <div className={`arrayBox ${isLeftPointer ? "leftPointerActive" : ""} ${isRightPointer ? "rightPointerActive" : ""} ${isMidPointer ? "midPointerActive" : ""}`}>
+                      {value}
+                    </div>
+
+
+                    <div className="pointerLabel">
+                      {isLeftPointer && currentStageIndex < 4 && (<div className="label leftLabel customPointer">
+                        
+                        <svg width="24" height="30">
+                          <line x1="12" y1="27" x2="12" y2="4" stroke="white" strokeWidth="5" strokeLinecap="round"></line>
+                          <polyline points="2 15 12 2 22 15" stroke="white" strokeWidth="5" fill="none" strokeLinecap="round"></polyline>
+                        </svg>
+                        <p>Left</p>
+                        </div>)}
+
+
+                      {isRightPointer && currentStageIndex < 4 && (<div className="label rightLabel">
+                        <svg width="24" height="30">
+                          <line x1="12" y1="27" x2="12" y2="4" stroke="white" strokeWidth="5" strokeLinecap="round"></line>
+                          <polyline points="2 15 12 2 22 15" stroke="white" strokeWidth="5" fill="none" strokeLinecap="round"></polyline>
+                        </svg>
+                        <p>Right</p>
+                      </div>)}
+
+                      {isMidPointer && (<div className="label middleLabel">
+                        <svg width="24" height="30">
+                          <line x1="12" y1="27" x2="12" y2="4" stroke="white" strokeWidth="5" strokeLinecap="round"></line>
+                          <polyline points="2 15 12 2 22 15" stroke="white" strokeWidth="5" fill="none" strokeLinecap="round"></polyline>
+                        </svg>
+                        <p>Middle</p>
+                      </div>)}
+
+                        
+                    </div>
+                    
+                  </div>
+                )
+
+
+                })}
+              </div>
+
+
+
+            )}
+
           </div>  
 
           <div className="controlButtons">
@@ -680,6 +858,7 @@ function App() {
         <div className="dsaButtons">
           <button className={activeAlgorithm === "TwoPointer" ? "activeDSAAlgorithm" : ""} onClick={handleTwoPointerClick}>Two Pointer</button>
           <button className={activeAlgorithm === "SlidingWindow" ? "activeDSAAlgorithm" : ""} onClick={handleSlidingWindowClick}>Sliding Window</button>
+          <button className={activeAlgorithm === "BinarySearch" ? "activeDSAAlgorithm" : ""} onClick={handleBinarySearchClick}>Binary Search</button>
         </div>
       </div>
     </div>
