@@ -521,6 +521,18 @@ function App() {
   }
 
 
+  const handleStackClick = () => {
+    setStageName("Stack");
+    setActiveAlgorithm("Stack");
+    setTextHeaderName("Stack");
+    setProblemDescription(`Problem: Given a string containing just the characters (, ), {, }, [ and ]. Determine if the input string is valid. An input string is valid if open brackets are closed by the same type of brackets in the correct order.
+
+      s: {[()]}
+      expected: True
+      `);
+    setCurrentStageIndex(0);
+  }
+
   
   let currentStage = null;
   let slidingWindowPrevSum = 0;
@@ -943,6 +955,7 @@ function App() {
           <button className={activeAlgorithm === "TwoPointer" ? "activeDSAAlgorithm" : ""} onClick={handleTwoPointerClick}>Two Pointer</button>
           <button className={activeAlgorithm === "SlidingWindow" ? "activeDSAAlgorithm" : ""} onClick={handleSlidingWindowClick}>Sliding Window</button>
           <button className={activeAlgorithm === "BinarySearch" ? "activeDSAAlgorithm" : ""} onClick={handleBinarySearchClick}>Binary Search</button>
+          <button className={activeAlgorithm === "Stack" ? "activeDSAAlgorithm" : ""} onclick={handleStackClick}>Stack</button>
         </div>
       </div>
     </div>
