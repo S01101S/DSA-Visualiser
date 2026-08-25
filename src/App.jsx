@@ -326,7 +326,7 @@ function App() {
 
             return max_sum;
           }
-      }`
+      };`
   }
 
   const slidingWindowStages = [
@@ -437,6 +437,90 @@ function App() {
       explanation: "Compare the middle value (42) to our target (42). They match which means the algorithm terminates and returns the index 4."
     }
   ]
+
+  const binarySearchCode = {
+    "Python" : `
+
+      def binarySearch(array, target):
+
+        left = 0
+        right = len(array) - 1
+
+        while left <= right:
+
+          mid = (left + right) // 2
+
+          if array[mid] == target:
+            return mid 
+          elif array[mid] > target:
+            right = mid - 1
+          else:
+            left = mid + 1
+
+        return -1
+    `,
+
+    "Java" : `
+
+      class Solution {
+      
+        public int binarySearch(int[] array, int target) {
+        
+          int left = 0;
+          int right = array.length - 1;
+
+          while(left <= right) {
+
+            int mid = left + (right - left) / 2;
+
+            if(array[mid] == target) {
+              return mid; 
+            }
+            else if(array[mid] > target) {
+              right = mid - 1;
+            }
+            else {
+              left = mid + 1;
+            }
+          }
+        
+          return -1;
+        }
+      }`,
+
+    "C++" : `
+
+      class Solution {
+      
+        public:
+
+          int binarySearch(vector<int>& array, int target) {
+          
+            int left = 0;
+            int right = array.size() - 1;
+
+            while(left <= right) {
+            
+              int mid = left + (right - left) / 2;
+
+              if(array[mid] == target) {
+                return mid;
+              }
+              else if(array[mid] > target) {
+                right = mid - 1;
+              }
+              else {
+                left = mid + 1;  
+              }
+            }
+
+            return -1;
+          }
+      };
+    `
+  }
+
+
   
   let currentStage = null;
   let slidingWindowPrevSum = 0;
@@ -708,7 +792,7 @@ function App() {
                   <div className="mathRow" style={{marginTop: "10px"}}>
                     <span className="number pencilWrite" style={{color: "rgb(118, 219, 140"}}>
                   
-                      {binarySearchArray[currentStage.midPointer]} &lt; 42 (Search left)
+                      {binarySearchArray[currentStage.midPointer]} &gt; 42 (Search left)
                     </span>
                   </div>
                 )}
@@ -840,7 +924,7 @@ function App() {
 
                 <SyntaxHighlighter language={languageMap[activeLanguage]} style={vscDarkPlus} className="codeDisplay" showLineNumbers={true}>
 
-                  {activeAlgorithm === "TwoPointer" ? twoPointerCode[activeLanguage] : activeAlgorithm === "SlidingWindow" ? slidingWindowCode[activeLanguage] : "Select an algorithm"}
+                  {activeAlgorithm === "TwoPointer" ? twoPointerCode[activeLanguage] : activeAlgorithm === "SlidingWindow" ? slidingWindowCode[activeLanguage] : activeAlgorithm === "BinarySearch" ? binarySearchCode[activeLanguage] : "Select an algorithm"}
 
                 </SyntaxHighlighter>
               </div>
