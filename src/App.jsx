@@ -14,6 +14,7 @@ function App() {
   const twoPointerArray = [2, 7, 11, 15];
   const slidingWindowArray = [2, 1, 5, 1, 3, 2];
   const binarySearchArray = [2, 8, 15, 23, 42, 56, 72];
+  const stackString = "{[()]}";
   const [activeTab, setActiveTab] = useState("Logic");
   const [activeLanguage, setActiveLanguage] = useState("Python");
   const languageMap = {
@@ -50,6 +51,9 @@ function App() {
       setCurrentStageIndex(currentStageIndex + 1);
     }
     else if(activeAlgorithm === "BinarySearch" && currentStageIndex < binarySearchStages.length - 1) {
+      setCurrentStageIndex(currentStageIndex + 1);
+    }
+    else if(activeAlgorithm === "Stack" && currentStageIndex < stackStages.length - 1) {
       setCurrentStageIndex(currentStageIndex + 1);
     }
   };
@@ -533,6 +537,52 @@ function App() {
     setCurrentStageIndex(0);
   }
 
+  const stackStages = [
+    {
+      stageIndex: 0,
+      currentCharIndex: 0, 
+      currentStack: ["{"],
+      explanation: "We encounter an opening bracket '{'. We push it onto the top of the stack."
+    },
+    {
+      stageIndex: 1, 
+      currentCharIndex: 1, 
+      currentStack: ["{", "["],
+      explanation: "We encounter an opening bracket '['. We push it onto the top of the stack."
+    }, 
+    {
+      stageIndex: 2, 
+      currentCharIndex: 2, 
+      currentStack: ["{", "[", "("], 
+      explanation: "We encounter an opening bracket '('. We push it onto the top of the stack."
+    },
+    {
+      stageIndex: 3, 
+      currentCharIndex: 3, 
+      currentStack: ["{", "["],
+      explanation: "We encounter a closing bracket ')'. We check the top of the stack and see a matching '('. They form a valid pair so we pop the '(' off the stack."
+    },
+    {
+      stageIndex: 4, 
+      currentCharIndex: 4, 
+      currentStack: ["{"], 
+      explanation: "We encounter another closing bracket ']'. We check the top of the stack and see a matching '['. They form a valid pair so we pop the '[' off the stack."
+    }, 
+    {
+      stageIndex: 5, 
+      currentCharIndex: 5, 
+      currentStack: [],
+      explanation: "We encounter a closing bracket '}'. We check the top of the stack and see a matching '{'. It forms a valid pair so we pop the '{' off hte stack."
+    },
+    {
+      stageIndex: 6, 
+      currentCharIndex: 6, 
+      currentStack: [], 
+      explanation: "We have reached the end of the string and our stack is empty. This means every opening bracket was successfully matched and closed. Ths string is valid."
+    }
+  ]
+
+
   
   let currentStage = null;
   let slidingWindowPrevSum = 0;
@@ -540,7 +590,7 @@ function App() {
   let slidingWindowInVal = 0;
   let slidingWindowNewSum = 0;
   let slidingWindowMaxSum = 0;
-
+  let stackStateArray = [];
 
   if(activeAlgorithm === "TwoPointer") {
     currentStage = twoPointerStages[currentStageIndex];
@@ -576,6 +626,10 @@ function App() {
   }
   else if(activeAlgorithm === "BinarySearch") {
     currentStage = binarySearchStages[currentStageIndex];
+  }
+  else  if (activeAlgorithm === "Stack") {
+    currentStage = stackStages[currentStageIndex];
+    stackStateArray = currentStage.currentStack;
   }
 
   return (
@@ -879,9 +933,125 @@ function App() {
                 })}
               </div>
 
-
-
             )}
+
+            {activeAlgorithm === "Stack" && (
+
+              <div className="stackVisualisation">
+
+                <div className="inputStringRow">
+
+                  {stackString.split('').map((char, index) => {
+
+                    let stringIndex = currentStage?.currentCharIndex === index; 
+
+                    return (
+
+                      <div key={index} className="arrayWrapper">
+
+                        <div className={`arrayBox ${stringIndex ? "leftPointerActive" : ""}`}>
+                          {char}
+                        </div>
+
+                        <div className="pointerLabel">
+                          {stringIndex && (
+                            <div className="label customPointer" style={{visibility: stringIndex ? "visible" : "hidden", display: "flex", flexDirection: "column", alignItems: "center"}}>
+                              <svg width="24" height="30">
+                                <line x1="12" y1="27" x2="12" y2="4" stroke="white" strokeWidth="5" strokeLinecap="round"></line>
+                                <polyline points="2 15 12 2 22 15" stroke="white" strokeWidth="5" fill="none" strokeLinecap="round"></polyline>
+                              </svg>
+                              <p>char</p>
+                            </div>
+                          )}
+                        </div>
+
+                      </div>
+
+                    )
+                  })}
+                </div>
+
+                <div className="stackBucket">
+                  <div className="stackItems">
+
+                    {stackStateArray.map((bracket, index) => (
+                      <div className="arrayBox" key={index}>
+                        {bracket}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeAlgorithm === "Stack" && (
+
+              <div className="whiteBoard" style={{width: "max-content", top: "50%", transform: "translateX(-50px)"}}>
+
+                {currentStageIndex < 6 && (
+
+                  <div className="mathRow">
+                    <span className="number pencilWrite" style={{textAlign: "left"}}>
+                      current: {stackString[currentStage?.currentCharIndex]}
+                    </span>
+                  </div>
+
+                )}
+                
+                {currentStageIndex <= 2 && (
+
+                  <div className="mathRow" style={{marginTop: "10px"}}>
+
+                    <span className="number pencilWrite" style={{textAlign: "left", color: "rgb(118, 219, 140)"}}>
+                      Push to stack
+                    </span>
+
+                  </div>
+                )}
+
+                {currentStageIndex >= 3 && currentStageIndex < 6 && (
+                  <>
+                  <div className="mathRow" style={{marginTop: "10px"}}>
+                    <span className="number pencilWrite" style={{textAlign: "left"}}>
+                      Top of stack matches
+                    </span>
+                  </div>
+
+                  <div className="mathRow" style={{marginTop: "5px"}}>
+                    <span className="number pencilWrite" style={{textAlign: "left", color: "rgb(118, 219, 140)"}}>
+                      Popped from stack: {{')': '(', ']': '[', '}': '{'}[stackString[currentStage?.currentCharIndex]]}
+                    </span>
+                  </div>
+                  </>
+                )}
+
+                {currentStageIndex === 6 && (
+                  <>
+                  
+                  <div className="mathRow" style={{marginTop: "10px"}}>
+
+                    <span className="number pencilwrite" style={{textAlign: "left"}}>
+                      Stack is empty
+                    </span>
+
+                  </div>
+                  
+                  <div cassName="mathRow" style={{marginTop: "5px"}}>
+
+                    <span className="number pencilWrite" style={{textAlign: "left", color: "rgb(118, 219, 140)"}}>
+                      Result: Valid
+                    </span>
+                    
+                  </div>
+                  
+                  
+                  </>
+                  
+                )}
+
+              </div>
+            )}
+
 
           </div>  
 
@@ -955,7 +1125,7 @@ function App() {
           <button className={activeAlgorithm === "TwoPointer" ? "activeDSAAlgorithm" : ""} onClick={handleTwoPointerClick}>Two Pointer</button>
           <button className={activeAlgorithm === "SlidingWindow" ? "activeDSAAlgorithm" : ""} onClick={handleSlidingWindowClick}>Sliding Window</button>
           <button className={activeAlgorithm === "BinarySearch" ? "activeDSAAlgorithm" : ""} onClick={handleBinarySearchClick}>Binary Search</button>
-          <button className={activeAlgorithm === "Stack" ? "activeDSAAlgorithm" : ""} onclick={handleStackClick}>Stack</button>
+          <button className={activeAlgorithm === "Stack" ? "activeDSAAlgorithm" : ""} onClick={handleStackClick}>Stack</button>
         </div>
       </div>
     </div>
