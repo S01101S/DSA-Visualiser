@@ -1252,7 +1252,7 @@ function App() {
 
             {activeAlgorithm === "Stack" && (
 
-              <div className="whiteBoard" style={{width: "max-content", top: "55%", left: "-10%", fontSize: "28px", transform: "translateX(-50px)"}}>
+              <div className="whiteBoard" style={{width: "max-content", top: "55%", fontSize: "28px", transform: "translateX(-50px)"}}>
 
                 {currentStageIndex < 6 && (
 
