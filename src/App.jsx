@@ -69,55 +69,100 @@ function App() {
       stageIndex: 0,
       leftPointer: 0,
       rightPointer: 3,
-      explanation: "Initialise the left pointer at the beginning of the array and the right pointer at the end of the array."
+      explanation: "Initialise the left pointer at the beginning of the array and the right pointer at the end of the array.",
+      codeLines: {
+        "Python": [4, 5],
+        "Java": [6, 7],
+        "C++": [8, 9]
+      }
     },
     {
       stageIndex: 1,
       leftPointer: 0,
       rightPointer: 3,
-      explanation: "Calculate the sum of the values at the current pointers: 2 + 15 = 17."
+      explanation: "Calculate the sum of the values at the current pointers: 2 + 15 = 17.",
+      codeLines: {
+        "Python": [10],
+        "Java": [11],
+        "C++": [13]
+      }
     },
     {
       stageIndex: 2,
       leftPointer: 0, 
       rightPointer: 3,
-      explanation: "Compare the sum (17) to the target (18). Since 17 is less than 18 we need to find a larger sum. Because the array is sorted in ascending order we move the left pointer to the right."
+      explanation: "Compare the sum (17) to the target (18). Since 17 is less than 18 we need to find a larger sum. Because the array is sorted in ascending order we move the left pointer to the right.",
+      codeLines: {
+        "Python": [18],
+        "Java": [21],
+        "C++": [23]
+      }
     },
     {
       stageIndex: 3,
       leftPointer: 1,
       rightPointer: 3,
-      explanation: "Move the left pointer one step to the right to index 1 (value 7)."
+      explanation: "Move the left pointer one step to the right to index 1 (value 7).",
+      codeLines: {
+        "Python": [19],
+        "Java": [22],
+        "C++": [24]
+      }
     },
     {
       stageIndex: 4,
       leftPointer: 1,
       rightPointer: 3,
-      explanation: "Calculate the new sum: 7 + 15 = 22."
+      explanation: "Calculate the new sum: 7 + 15 = 22.",
+      codeLines: {
+        "Python": [10],
+        "Java": [11],
+        "C++": [13]
+      }
     },
     {
       stageIndex: 5,
       leftPointer: 1,
       rightPointer: 3,
-      explanation: "Compare the sum (22) to the target (18). Since 22 is greater than 18 we are over our target and need a smaller sum. We move the right pointer to the left."
+      explanation: "Compare the sum (22) to the target (18). Since 22 is greater than 18 we are over our target and need a smaller sum. We move the right pointer to the left.",
+      codeLines: {
+        "Python": [15],
+        "Java": [17],
+        "C++": [19]
+      }
     },
     {
       stageIndex: 6,
       leftPointer: 1,
       rightPointer: 2,
-      explanation: "Move the right pointer one step to the left to index 2 (value 11)."
+      explanation: "Move the right pointer one step to the left to index 2 (value 11).",
+      codeLines: {
+        "Python": [16],
+        "Java": [18],
+        "C++": [20]
+      }
     },
     {
       stageIndex: 7,
       leftPointer: 1,
       rightPointer: 2,
-      explanation: "Calculate the new sum: 7 + 11 = 18."
+      explanation: "Calculate the new sum: 7 + 11 = 18.",
+      codeLines: {
+        "Python": [10],
+        "Java": [11],
+        "C++": [13]
+      }
     },
     {
       stageIndex: 8,
       leftPointer: 1,
       rightPointer: 2,
-      explanation: "Target found. The sum matches our target of 18. The algorithm stops and returns the indices [1, 2]."
+      explanation: "Target found. The sum matches our target of 18. The algorithm stops and returns the indices [1, 2].",
+      codeLines: {
+        "Python": [12, 13],
+        "Java": [13, 14],
+        "C++": [15, 16]
+      }
     }
   ];
 
@@ -338,49 +383,89 @@ function App() {
       stageIndex: 0, 
       leftPointer: 0,
       rightPointer: 2,
-      explanation: "Initialise the window of size k=3 at the start of the array. Calculate the sum of the first window: 2 + 1 + 5 = 8. Set the maximum sum to 8." 
+      explanation: "Initialise the window of size k=3 at the start of the array. Calculate the sum of the first window: 2 + 1 + 5 = 8. Set the maximum sum to 8.",
+      codeLines: {
+        "Python": [7, 8, 9, 11, 12],
+        "Java": [10, 11, 12, 14, 16, 17, 20],
+        "C++": [12, 13, 14, 16, 18, 19, 22]
+      }
     },
     {
       stageIndex: 1,
       leftPointer: 1,
       rightPointer: 3,
       explanation: "Slide the window one step right. Instead of recalculating the sum, subtract the number that left the window (2) and add the new number (1) to the sum.",
+      codeLines: {
+        "Python": [17, 19, 20, 22],
+        "Java": [24, 26, 27, 29],
+        "C++": [26, 28, 29, 31]
+      }
     },
     {
       stageIndex: 2, 
       leftPointer: 1,
       rightPointer: 3,
-      explanation: "The new sum is 8 - 2 + 1 = 7. Compare that to the maximum sum (8). It does not change and remains as 8."
+      explanation: "The new sum is 8 - 2 + 1 = 7. Compare that to the maximum sum (8). It does not change and remains as 8.",
+      codeLines: {
+        "Python": [24],
+        "Java": [31],
+        "C++": [33]
+      }
     },
     {
       stageIndex: 3,
       leftPointer: 2,
       rightPointer: 4,
-      explanation: "Slide the window to the right again. Subtract the outgoing number (1) and add the incoming number (3)."
+      explanation: "Slide the window to the right again. Subtract the outgoing number (1) and add the incoming number (3).",
+      codeLines: {
+        "Python": [17, 19, 20, 22],
+        "Java": [24, 26, 27, 29],
+        "C++": [26, 28, 29, 31]
+      }
     },
     {
       stageIndex: 4,
       leftPointer: 2,
       rightPointer: 4,
-      explanation: "The new sum is 7 - 1 + 3 = 9. Since 9 is greater than our previous maximum sum of 8, we update the maximum sum to 9."
+      explanation: "The new sum is 7 - 1 + 3 = 9. Since 9 is greater than our previous maximum sum of 8, we update the maximum sum to 9.",
+      codeLines: {
+        "Python": [24, 25],
+        "Java": [31, 32],
+        "C++": [33, 34]
+      }
     },
     {
       stageIndex: 5,
       leftPointer: 3,
       rightPointer: 5,
-      explanation: "Slide the window to the right. Subtract the outgoing number (5) and add the incoming number (2)."
+      explanation: "Slide the window to the right. Subtract the outgoing number (5) and add the incoming number (2).",
+      codeLines: {
+        "Python": [17, 19, 20, 22],
+        "Java": [24, 26, 27, 29],
+        "C++": [26, 28, 29, 31]
+      }
     },
     {
       stageIndex: 6,
       leftPointer: 3,
       rightPointer: 5,
-      explanation: "The new sum is 9 - 5 + 2 = 6. Comparing that to our maximum sum which is 9. Since the new sum is lower, our maximum sum remains the same (9)."
+      explanation: "The new sum is 9 - 5 + 2 = 6. Comparing that to our maximum sum which is 9. Since the new sum is lower, our maximum sum remains the same (9).",
+      codeLines: {
+        "Python": [24],
+        "Java": [31],
+        "C++": [33]
+      }
     },
     {
       stageIndex: 7,
       leftPointer: 3,
       rightPointer: 5,
-      explanation: "The right pointer has reached the end of the array. The algorithm terminates and returns the maximum sum found: 9."
+      explanation: "The right pointer has reached the end of the array. The algorithm terminates and returns the maximum sum found: 9.",
+      codeLines: {
+        "Python": [28],
+        "Java": [37],
+        "C++": [38]
+      }
     }
   ]
   
@@ -403,42 +488,72 @@ function App() {
       leftPointer: 0,
       rightPointer: 6,
       midPointer: 3,
-      explanation: "Initialise the left pointer at the start of the array and the right pointer at the end. Calculate the middle index: (0 + 6) / 2 = 3. The middle value is 23."
+      explanation: "Initialise the left pointer at the start of the array and the right pointer at the end. Calculate the middle index: (0 + 6) / 2 = 3. The middle value is 23.",
+      codeLines: {
+        "Python": [5, 6, 10],
+        "Java": [7, 8, 12],
+        "C++": [9, 10, 14]
+      }
     },
     {
       stageIndex: 1,
       leftPointer: 0,
       rightPointer: 6,
       midPointer: 3,
-      explanation: "Compare the middle value (23) to our target (42). Since 23 is less than 42, we know the target must be in the right half of the array. We can ignore the left half."
+      explanation: "Compare the middle value (23) to our target (42). Since 23 is less than 42, we know the target must be in the right half of the array. We can ignore the left half.",
+      codeLines: {
+        "Python": [16, 17],
+        "Java": [20, 21],
+        "C++": [22, 23]
+      }
     },
     {
       stageIndex: 2,
       leftPointer: 4,
       rightPointer: 6,
       midPointer: 5,
-      explanation: "Move the left pointer to middle + 1 (index 4) to focus on the right half. Calculate the new middle index: (4+6) / 2. The new middle value is 56."
+      explanation: "Move the left pointer to middle + 1 (index 4) to focus on the right half. Calculate the new middle index: (4+6) / 2. The new middle value is 56.",
+      codeLines: {
+        "Python": [10],
+        "Java": [12],
+        "C++": [14]
+      }
     },
     {
       stageIndex: 3,
       leftPointer: 4,
       rightPointer: 6,
       midPointer: 5,
-      explanation: "Compare the new middle value (56) to our target (42). Since 56 is greater than 42 we know the target must be in the left half of this new window. We ignore the right half."
+      explanation: "Compare the new middle value (56) to our target (42). Since 56 is greater than 42 we know the target must be in the left half of this new window. We ignore the right half.",
+      codeLines: {
+        "Python": [14, 15],
+        "Java": [17, 18],
+        "C++": [19, 20]
+      }
     },
     {
       stageIndex: 4,
       leftPointer: 4,
       rightPointer: 4,
       midPointer: 4,
-      explanation: "Move the right pointer to middle - 1 (index 4). Calculate the new middle index: (4 + 4) / 2 = 4. The new middle value is 42."
+      explanation: "Move the right pointer to middle - 1 (index 4). Calculate the new middle index: (4 + 4) / 2 = 4. The new middle value is 42.",
+      codeLines: {
+        "Python": [10],
+        "Java": [12],
+        "C++": [14]
+      }
     },
     {
       stageIndex: 5,
       leftPointer: 4,
       rightPointer: 4,
       midPointer: 4,
-      explanation: "Compare the middle value (42) to our target (42). They match which means the algorithm terminates and returns the index 4."
+      explanation: "Compare the middle value (42) to our target (42). They match which means the algorithm terminates and returns the index 4.",
+      codeLines: {
+        "Python": [12, 13],
+        "Java": [14, 15],
+        "C++": [16, 17]
+      }
     }
   ]
 
@@ -542,46 +657,189 @@ function App() {
       stageIndex: 0,
       currentCharIndex: 0, 
       currentStack: ["{"],
-      explanation: "We encounter an opening bracket '{'. We push it onto the top of the stack."
+      explanation: "We encounter an opening bracket '{'. We push it onto the top of the stack.",
+      codeLines: {
+        "Python": [20, 21],
+        "Java": [11, 12],
+        "C++": [13, 14]
+      }
     },
     {
       stageIndex: 1, 
       currentCharIndex: 1, 
       currentStack: ["{", "["],
-      explanation: "We encounter an opening bracket '['. We push it onto the top of the stack."
+      explanation: "We encounter an opening bracket '['. We push it onto the top of the stack.",
+      codeLines: {
+        "Python": [20, 21],
+        "Java": [11, 12],
+        "C++": [13, 14]
+      }
     }, 
     {
       stageIndex: 2, 
       currentCharIndex: 2, 
       currentStack: ["{", "[", "("], 
-      explanation: "We encounter an opening bracket '('. We push it onto the top of the stack."
+      explanation: "We encounter an opening bracket '('. We push it onto the top of the stack.",
+      codeLines: {
+        "Python": [20, 21],
+        "Java": [11, 12],
+        "C++": [13, 14]
+      }
     },
     {
       stageIndex: 3, 
       currentCharIndex: 3, 
       currentStack: ["{", "["],
-      explanation: "We encounter a closing bracket ')'. We check the top of the stack and see a matching '('. They form a valid pair so we pop the '(' off the stack."
+      explanation: "We encounter a closing bracket ')'. We check the top of the stack and see a matching '('. They form a valid pair so we pop the '(' off the stack.",
+      codeLines: {
+        "Python": [10, 12, 15],
+        "Java": [14, 19, 21],
+        "C++": [16, 21, 22, 24]
+      }
     },
     {
       stageIndex: 4, 
       currentCharIndex: 4, 
       currentStack: ["{"], 
-      explanation: "We encounter another closing bracket ']'. We check the top of the stack and see a matching '['. They form a valid pair so we pop the '[' off the stack."
+      explanation: "We encounter another closing bracket ']'. We check the top of the stack and see a matching '['. They form a valid pair so we pop the '[' off the stack.",
+      codeLines: {
+        "Python": [10, 12, 15],
+        "Java": [14, 19, 24],
+        "C++": [16, 21, 22, 30]
+      }
     }, 
     {
       stageIndex: 5, 
       currentCharIndex: 5, 
       currentStack: [],
-      explanation: "We encounter a closing bracket '}'. We check the top of the stack and see a matching '{'. It forms a valid pair so we pop the '{' off hte stack."
+      explanation: "We encounter a closing bracket '}'. We check the top of the stack and see a matching '{'. It forms a valid pair so we pop the '{' off hte stack.",
+      codeLines: {
+        "Python": [10, 12, 15],
+        "Java": [14, 19, 27],
+        "C++": [16, 21, 22, 27]
+
+      }
     },
     {
       stageIndex: 6, 
       currentCharIndex: 6, 
       currentStack: [], 
-      explanation: "We have reached the end of the string and our stack is empty. This means every opening bracket was successfully matched and closed. Ths string is valid."
+      explanation: "We have reached the end of the string and our stack is empty. This means every opening bracket was successfully matched and closed. Ths string is valid.",
+      codeLines: {
+        "Python": [23, 24],
+        "Java": [34],
+        "C++": [36]
+      }
     }
   ]
 
+
+  const stackCode = {
+
+    "Python" : `
+    
+      def isValid(s):
+
+        stack = []
+        mapping = {")": "(", "}": "{", "]": "["}
+
+        for i in s:
+
+          if i in mapping:
+
+            if not stack:
+              return False 
+
+            top_stack_element = stack.pop()
+
+            if mapping[i] != top_stack_element:
+              return False 
+          
+          else:
+            stack.append(i)
+    
+        if len(stack) == 0:
+          return True 
+        else:
+          return False`,
+
+    "Java" : `
+
+      class Solution {
+      
+        public boolean isValid(String s) {
+
+          Stack<Character> stack = new Stack<>();
+
+          for(char c : s.toCharArray()) {
+
+            if(c == '(' || c == '[' || c == '{') {
+              stack.push(c);
+            }
+            else {
+              if(stack.isEmpty()) {
+                return false;
+              }  
+
+              char top_stack_element = stack.pop();
+
+              if(c == ')' && top_stack_element != '(') {
+                return false;
+              }
+              else if(c == ']' && top_stack_element != '[') {
+                return false;
+              }
+              else if(c == '}' && top_stack_element != '{') {
+                return false;
+              }
+            }
+          
+          }
+
+          return stack.isEmpty();
+        }
+      }`,
+
+    "C++" : `
+    
+      class Solution {
+      
+        public:
+
+          bool isValid(string s) {
+
+            stack<char> st;
+
+            for(char c : s) {
+            
+              if(c == '(' || c == '{' || c == '[') {
+                st.push(c);
+              }
+              else {
+                if(st.empty()) {
+                  return false;
+                }  
+
+                char top_stack_element = st.top();
+                st.pop();
+
+                if(c == ')' && top_stack_element != '(') {
+                  return false;
+                }
+                else if(c == '}' && top_stack_element != '{') {
+                  return false;
+                }
+                else if(c == ']' && top_stack_element != '[') {
+                  return false;
+                }
+              }
+            }
+            
+            return st.empty();
+          }
+      };
+    `
+  }
 
   
   let currentStage = null;
@@ -630,6 +888,14 @@ function App() {
   else  if (activeAlgorithm === "Stack") {
     currentStage = stackStages[currentStageIndex];
     stackStateArray = currentStage.currentStack;
+  }
+
+
+  const codeMap = {
+    TwoPointer: twoPointerCode, 
+    SlidingWindow: slidingWindowCode, 
+    BinarySearch: binarySearchCode,
+    Stack: stackCode
   }
 
   return (
@@ -986,7 +1252,7 @@ function App() {
 
             {activeAlgorithm === "Stack" && (
 
-              <div className="whiteBoard" style={{width: "max-content", top: "50%", transform: "translateX(-50px)"}}>
+              <div className="whiteBoard" style={{width: "max-content", top: "55%", left: "-10%", fontSize: "28px", transform: "translateX(-50px)"}}>
 
                 {currentStageIndex < 6 && (
 
@@ -1104,11 +1370,25 @@ function App() {
 
                 </div>
 
-                <SyntaxHighlighter language={languageMap[activeLanguage]} style={vscDarkPlus} className="codeDisplay" showLineNumbers={true}>
+                <SyntaxHighlighter language={languageMap[activeLanguage]} style={vscDarkPlus} wrapLines={true} className="codeDisplay" showLineNumbers={true} lineProps={(lineNumber) => {
 
-                  {activeAlgorithm === "TwoPointer" ? twoPointerCode[activeLanguage] : activeAlgorithm === "SlidingWindow" ? slidingWindowCode[activeLanguage] : activeAlgorithm === "BinarySearch" ? binarySearchCode[activeLanguage] : "Select an algorithm"}
+                  const activeLines = currentStage?.codeLines?.[activeLanguage] || [];
 
+                  let style = {display: "block"};
+
+                  if(activeLines.includes(lineNumber)) {
+                    style.backgroundColor = 'rgba(118, 219, 140, 0.2)';
+                    style.borderLeft = '4px solid rgb(118, 219, 140)';
+                  }
+
+                  return {style};
+
+                }}>
+                  
+
+                  {codeMap[activeAlgorithm]?.[activeLanguage] || "Select an algorithm"}
                 </SyntaxHighlighter>
+               
               </div>
 
             )}
